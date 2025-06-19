@@ -1,0 +1,15 @@
+[build]
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[functions]
+  external_node_modules = ["express"]
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/mcp"
+  to = "/.netlify/functions/mcp"
+  status = 200
+  force = true 

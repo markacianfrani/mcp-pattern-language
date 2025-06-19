@@ -1,0 +1,35 @@
+{
+  "name": "a-pattern-language-mcp",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-instructions.js > src/generated/instructions.ts && tsc && cp -r src dist/",
+    "start": "node dist/index.js",
+    "dev": "node --loader ts-node/esm index.ts",
+    "inspect": "npx @modelcontextprotocol/inspector http://localhost:3000/mcp",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "instructions",
+    "testing",
+    "patterns"
+  ],
+  "author": "",
+  "license": "MIT",
+  "description": "A Pattern Language MCP server providing structured coding instructions",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.11.4",
+    "express": "^5.1.0",
+    "fetch-to-node": "^2.1.0",
+    "serverless-http": "^3.2.0",
+    "zod": "3.20.6"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
