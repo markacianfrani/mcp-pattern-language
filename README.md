@@ -6,6 +6,10 @@ An MCP server for all my rules, prompts, etc etc. Allows agents to call rules on
 
 Spiritually similar to Cursor's rules.
 
+<a href="https://glama.ai/mcp/servers/@markacianfrani/mcp-pattern-language">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@markacianfrani/mcp-pattern-language/badge" alt="Rules Server MCP server" />
+</a>
+
 ## Usage
 
 ### Claude Code
