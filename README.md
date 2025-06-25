@@ -67,3 +67,15 @@ Clearly-defined tool descriptions allow the agent to fetch rules on demand, only
 ## Resources
 
 - [Deploying this shit on netlify](https://developers.netlify.com/guides/write-mcps-on-netlify/)
+
+## Dev 
+1. Start the server
+
+```
+npm run dev
+```
+
+2. Open MCP inspector
+```
+npm run inspect
+```
