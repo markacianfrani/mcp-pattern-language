@@ -64,6 +64,26 @@ Clearly-defined tool descriptions allow the agent to fetch rules on demand, only
 - Patterns must be associated with a specific action. For example, "writing tests", "authoring UI", "reviewing a PR". 
 - The agent ultimately decides if it's going to call the tool. Sometimes it does. Sometimes it doesn't. 
 
+
+## Tools 
+
+
+1. `get_rules_for_writing_tests`
+   - Use when: writing any type of test, 
+   - Inputs:
+     - `language` (string)
+2. `get_rules_for_composing_ui`
+  - Use when: creating new frontend components
+
+## Prompts
+
+> In Claude Code, invoke prompts as slash commands. 
+
+1. `pr-review`
+  - Use when: you want feedback on a unit of work 
+  - /pr-review
+  - See [resources/pr-review.md](./resources/pr-review.md) for the full template.
+
 ## Resources
 
 - [Deploying this shit on netlify](https://developers.netlify.com/guides/write-mcps-on-netlify/)

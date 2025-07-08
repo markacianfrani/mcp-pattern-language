@@ -1,11 +1,14 @@
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { McpServer, ResourceTemplate } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
+import { CallToolResult, ReadResourceResult } from "@modelcontextprotocol/sdk/types.js";
 import {
     TESTING_INSTRUCTIONS,
     TestingInstructions,
     UI_INSTRUCTIONS
 } from "./generated/instructions.js";
+import { ResourcesProvider } from "./resources-provider.js";
+import path from "path";
+import fs from "fs/promises";
 
 export type supportedLanguage = "typescript" | "python";
 export const supportedLanguages: [supportedLanguage, ...supportedLanguage[]] = [
@@ -47,10 +50,16 @@ export function getServer(): McpServer {
         {
             capabilities: {
                 logging: {},
-                tools: {}
+                tools: {},
+                resources: {},
+                prompts: {}
             }
         }
     );
+
+    // Initialize resources provider
+    const resourcesPath = path.join(process.cwd(), "resources");
+    const resourcesProvider = new ResourcesProvider(resourcesPath);
 
     server.tool(
         "get_rules_for_writing_tests",
@@ -105,7 +114,46 @@ export function getServer(): McpServer {
         }
     );
 
-    // Reviewing PRs
+    // Register the pr-review resource
+    server.registerResource(
+        "pr-review",
+        `file://${path.join(resourcesPath, "pr-review.md")}`,
+        {
+            title: "PR Review",
+            description: "Helps with reviewing branches and pull requests.",
+            mimeType: "text/markdown"
+        },
+        async (uri: URL) => {
+            return await resourcesProvider.readResource(uri.href);
+        }
+    );
+
+    // Register PR review prompt
+    server.registerPrompt(
+        "pr-review",
+        {
+            title: "PR Review",
+            description: "Helps with reviewing branches and pull requests.",
+            argsSchema: {}
+        },
+        async () => {
+            const prReviewPath = path.join(resourcesPath, "pr-review.md");
+            const prReviewContent = await fs.readFile(prReviewPath, "utf8");
+            
+            return {
+                messages: [
+                    {
+                        role: "user",
+                        content: {
+                            type: "text",
+                            text: prReviewContent
+                        }
+                    }
+                ]
+            };
+        }
+    );
+
 
     // Refactoring
 
